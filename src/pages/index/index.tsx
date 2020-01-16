@@ -99,7 +99,7 @@ const DynamicForm: FC<DynamicFormProps> = props => {
           fieldProps="userClick"
           required
           placeholder="点击事件"
-          title="用户点击事件"
+          title="点击事件"
           onClick={e => console.log(e)}
           extra="¥"
         />
@@ -107,7 +107,7 @@ const DynamicForm: FC<DynamicFormProps> = props => {
           fieldProps="userImgClick"
           required
           placeholder="点击事件"
-          title="图片点击事件"
+          title="图片点击"
           imgExtra={PositionIcon}
           imgExtraClick={e => console.log(e)}
         />
