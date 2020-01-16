@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { Button, List } from 'antd-mobile';
 import Form, { Field, useForm } from 'rc-field-form';
 import { Store } from 'rc-field-form/es/interface';
+import PositionIcon from './assets/position_ico.png';
 
 import {
   NomarInput,
@@ -51,7 +52,7 @@ const radioList = [
     label: '否',
     value: 'no',
   },
-]
+];
 
 const DynamicForm: FC<DynamicFormProps> = props => {
   const [form] = useForm();
@@ -67,19 +68,72 @@ const DynamicForm: FC<DynamicFormProps> = props => {
     <Form
       form={form}
       name="basic"
-      initialValues={{ username: '', userRadio2: 'no', userRadio1: 'yes' }}
+      initialValues={{
+        username: '123',
+        userRadio2: 'no',
+        userRadio1: 'yes',
+        userClick: '点击事件',
+        userImgClick: '图片点击事件',
+      }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
     >
       <List>
-        <NomarInput fieldProps="username" required  placeholder="请输入" title="用户名" inputType="text"/>
-        <NomarPicker fieldProps="userdata" required placeholder="请选择" title="用户数据" data={seasons} />
+        <NomarInput
+          fieldProps="username"
+          required
+          placeholder="请输入"
+          title="用户名"
+          inputType="text"
+        />
+        <NomarPicker
+          fieldProps="userdata"
+          required
+          placeholder="请选择"
+          title="用户数据"
+          data={seasons}
+        />
         <NomarSwitch fieldProps="userswitch" required placeholder="请选择" title="用户选择" />
         <OnlyReadInput fieldProps="userswitch" required placeholder="请选择" title="用户选择" />
+        <OnlyReadInput
+          fieldProps="userClick"
+          required
+          placeholder="点击事件"
+          title="点击事件"
+          onClick={e => console.log(e)}
+          extra="¥"
+        />
+        <OnlyReadInput
+          fieldProps="userImgClick"
+          required
+          placeholder="点击事件"
+          title="图片点击"
+          imgExtra={PositionIcon}
+          imgExtraClick={e => console.log(e)}
+        />
         <NomarTextArea fieldProps="usertextarea" required placeholder="请选择" title="用户选择" />
-        <NomarDatePicker fieldProps="userDataPicker" required placeholder="请选择" title="用户时间选择" modeType="datetime" />
-        <NomarRadio fieldProps="userRadio1" required placeholder="请选择" title="用户选择1" data={radioList} />
-        <NomarRadio fieldProps="userRadio2" required placeholder="请选择" title="用户选择2" data={radioList} radioType="vertical" />
+        <NomarDatePicker
+          fieldProps="userDataPicker"
+          required
+          placeholder="请选择"
+          title="用户时间选择"
+          modeType="datetime"
+        />
+        <NomarRadio
+          fieldProps="userRadio1"
+          required
+          placeholder="请选择"
+          title="用户选择1"
+          data={radioList}
+        />
+        <NomarRadio
+          fieldProps="userRadio2"
+          required
+          placeholder="请选择"
+          title="用户选择2"
+          data={radioList}
+          radioType="vertical"
+        />
       </List>
       <Field {...tailLayout}>
         <Button type="primary" onClick={() => form.submit()}>
