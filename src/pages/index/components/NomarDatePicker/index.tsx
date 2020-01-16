@@ -5,7 +5,7 @@ import { DatePicker, List } from 'antd-mobile';
 
 import styles from '../../styles/index.less';
 
-export interface NomarDatePickerProps extends DatePickerPropsType {
+export interface INomarDatePickerProps extends DatePickerPropsType {
   modeType?: DatePickerPropsType['mode'];
   fieldProps: string;
   required?: boolean;
@@ -14,7 +14,7 @@ export interface NomarDatePickerProps extends DatePickerPropsType {
   placeholder?: string;
 }
 
-const NomarDatePicker: FC<NomarDatePickerProps> = props => {
+const NomarDatePicker: FC<INomarDatePickerProps> = props => {
   const {
     fieldProps,
     required = false,

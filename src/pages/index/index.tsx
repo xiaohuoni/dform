@@ -10,6 +10,7 @@ import {
   OnlyReadInput,
   NomarTextArea,
   NomarDatePicker,
+  NomarRadio,
 } from './components';
 
 interface DynamicFormProps {}
@@ -41,6 +42,17 @@ const seasons = [
   ],
 ];
 
+const radioList = [
+  {
+    label: '是',
+    value: 'yes',
+  },
+  {
+    label: '否',
+    value: 'no',
+  },
+]
+
 const DynamicForm: FC<DynamicFormProps> = props => {
   const [form] = useForm();
   const onFinish = (values: Store) => {
@@ -55,7 +67,7 @@ const DynamicForm: FC<DynamicFormProps> = props => {
     <Form
       form={form}
       name="basic"
-      initialValues={{ username: '' }}
+      initialValues={{ username: '', userRadio2: 'no', userRadio1: 'yes' }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
     >
@@ -65,7 +77,9 @@ const DynamicForm: FC<DynamicFormProps> = props => {
         <NomarSwitch fieldProps="userswitch" required placeholder="请选择" title="用户选择" />
         <OnlyReadInput fieldProps="userswitch" required placeholder="请选择" title="用户选择" />
         <NomarTextArea fieldProps="usertextarea" required placeholder="请选择" title="用户选择" />
-        <NomarDatePicker fieldProps="userDataPicker" required placeholder="请选择" title="用户时间选择" modeType='datetime' />
+        <NomarDatePicker fieldProps="userDataPicker" required placeholder="请选择" title="用户时间选择" modeType="datetime" />
+        <NomarRadio fieldProps="userRadio1" required placeholder="请选择" title="用户选择1" data={radioList} />
+        <NomarRadio fieldProps="userRadio2" required placeholder="请选择" title="用户选择2" data={radioList} radioType="vertical" />
       </List>
       <Field {...tailLayout}>
         <Button type="primary" onClick={() => form.submit()}>
