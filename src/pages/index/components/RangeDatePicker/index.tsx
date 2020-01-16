@@ -1,17 +1,13 @@
 import React,{ FC } from 'react';
 import { DatePickerPropsType } from 'antd-mobile/es/date-picker/PropsType';
+import { INomarDatePickerProps } from '../NomarDatePicker';
 
-export interface IRangeDatePickerProps extends DatePickerPropsType{
-  modeType?: DatePickerPropsType['mode'];
-  fieldProps1: string;
+export interface IRangeDatePickerProps extends INomarDatePickerProps{
   fieldProps2: string;
-  required?: boolean;
-  title: string;
-  rules?: [];
-  placeholder?: string;
 }
 
 const RangeDatePicker: FC<IRangeDatePickerProps> = props => {
+
   return (
     <div>1</div>
   )
