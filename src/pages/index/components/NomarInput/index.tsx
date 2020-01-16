@@ -34,7 +34,7 @@ const NomarInput: FC<INomarInputProps> = props => {
         <InputItem
           {...otherProps}
           type={inputType}
-          style={{ width: imgExtra ? '86%' : '100%', ...coverStyle }}
+          style={{ width: imgExtra ? '86%' : '100%', textAlign: 'right', ...coverStyle }}
         >
           {required && <span className={styles.redStar}>*</span>}
           {title}
