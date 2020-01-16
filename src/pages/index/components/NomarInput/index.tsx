@@ -16,7 +16,7 @@ export interface INomarInputProps extends InputItemPropsType {
 
 const NomarInput: FC<INomarInputProps> = props => {
   const {
-    inputType,
+    inputType='text',
     coverStyle,
     title,
     required = false,
