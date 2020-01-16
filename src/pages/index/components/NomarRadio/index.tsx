@@ -18,7 +18,7 @@ export interface INomarRadioProps extends RadioGroupProps {
   required?: boolean;
   placeholder?: string;
   data: radioItem[];
-  radioType?: string;
+  radioType?: 'horizontal' | 'vertical';
   coverStyle?: React.CSSProperties;
 }
 
