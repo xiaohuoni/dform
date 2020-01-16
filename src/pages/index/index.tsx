@@ -3,7 +3,14 @@ import { Button, List } from 'antd-mobile';
 import Form, { Field, useForm } from 'rc-field-form';
 import { Store } from 'rc-field-form/es/interface';
 
-import { NomarInput, NomarPicker,NomarSwitch,OnlyReadInput,NomarTextArea } from './components';
+import {
+  NomarInput,
+  NomarPicker,
+  NomarSwitch,
+  OnlyReadInput,
+  NomarTextArea,
+  NomarDatePicker,
+} from './components';
 
 interface DynamicFormProps {}
 
@@ -58,6 +65,7 @@ const DynamicForm: FC<DynamicFormProps> = props => {
         <NomarSwitch fieldProps="userswitch" required placeholder="请选择" title="用户选择" />
         <OnlyReadInput fieldProps="userswitch" required placeholder="请选择" title="用户选择" />
         <NomarTextArea fieldProps="usertextarea" required placeholder="请选择" title="用户选择" />
+        <NomarDatePicker fieldProps="userDataPicker" required placeholder="请选择" title="用户时间选择" modeType='datetime' />
       </List>
       <Field {...tailLayout}>
         <Button type="primary" onClick={() => form.submit()}>
