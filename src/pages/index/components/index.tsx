@@ -5,3 +5,4 @@ export { default as NomarTextArea } from './NomarTextArea';
 export { default as OnlyReadInput } from './OnlyReadInput';
 export { default as NomarDatePicker } from './NomarDatePicker';
 export { default as NomarRadio } from './NomarRadio';
+export { default as RangeDatePicker } from './RangeDatePicker';
