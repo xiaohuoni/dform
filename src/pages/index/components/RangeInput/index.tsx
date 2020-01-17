@@ -24,12 +24,12 @@ const RangeInput: FC<IRangeInputProps> = props => {
     ...otherProps
   } = props;
   return (
-    <div className={styles.fixRangeInputStyle}>
-      <div className={styles.firstRangeInputStyle}>
+    <div className={styles.rangeInputStyle}>
+      <div className={styles.beginRangeInputStyle}>
         <NomarInput {...props} />
       </div>
       <div className={styles.line}>——</div>
-      <div className={styles.secondRangeInputStyle}>
+      <div className={styles.endRangeInputStyle}>
         <Field name={fieldProps2} rules={rules || [{ required, message: `请输入${title}` }]}>
           <InputItem {...otherProps} type={inputType} style={{ ...coverStyle }} />
         </Field>
