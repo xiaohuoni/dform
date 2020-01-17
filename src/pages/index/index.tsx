@@ -140,6 +140,8 @@ const DynamicForm: FC<DynamicFormProps> = props => {
           required
           title="时间(datetime)"
           modeType="datetime"
+          minDate={new Date()}
+          maxDate={new Date()}
         />
         <RangeDatePicker
           fieldProps="datePicker3"

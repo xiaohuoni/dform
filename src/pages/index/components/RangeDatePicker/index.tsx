@@ -8,11 +8,11 @@ import styles from '../../styles/index.less';
 
 export interface IRangeDatePickerProps extends INomarDatePickerProps {
   fieldProps2: string;
+  minDate?: Date;
+  maxDate?: Date;
 }
 
 const RangeDatePicker: FC<IRangeDatePickerProps> = props => {
-  const [beginDate, setBeginDate] = useState();
-  const [endDate, setEndDate] = useState();
   const {
     fieldProps,
     fieldProps2,
@@ -20,12 +20,14 @@ const RangeDatePicker: FC<IRangeDatePickerProps> = props => {
     modeType = 'date',
     rules = [],
     title,
+    minDate,
+    maxDate,
     ...otherProps
   } = props;
 
   /**
    * 时间展示类型改变事件
-   * @param val 
+   * @param val
    */
   const changeDateFormat = (val: Date) => {
     let dateFormat = '';
@@ -42,12 +44,12 @@ const RangeDatePicker: FC<IRangeDatePickerProps> = props => {
       case 'year':
         dateFormat = moment(val).format('YYYY');
         break;
-      default: 
-      dateFormat = moment(val).format('YYYY-MM-DD');
+      default:
+        dateFormat = moment(val).format('YYYY-MM-DD');
         break;
     }
     return dateFormat;
-  }
+  };
 
   return (
     <div className={styles.rangeDatePickerStyle}>
@@ -55,13 +57,9 @@ const RangeDatePicker: FC<IRangeDatePickerProps> = props => {
         <Field name={fieldProps} rules={rules || [{ required, message: `请选择${title}` }]}>
           <DatePicker
             {...otherProps}
-            value={beginDate}
             mode={modeType}
-            maxDate={endDate}
-            format={value => {
-              return changeDateFormat(value)
-            }}
-            onChange={e => { setBeginDate(e) }}
+            minDate={minDate}
+            maxDate={maxDate}
           >
             <List.Item arrow="horizontal">
               {required && <span className={styles.redStar}>*</span>}
@@ -76,11 +74,9 @@ const RangeDatePicker: FC<IRangeDatePickerProps> = props => {
           <DatePicker
             {...otherProps}
             mode={modeType}
-            minDate={beginDate}
-            onChange={e => { setEndDate(e) }}
-            format={value => {
-              return changeDateFormat(value)
-            }}
+            minDate={minDate}
+            maxDate={maxDate}
+            format={value => changeDateFormat(value)}
           >
             <List.Item arrow="horizontal"></List.Item>
           </DatePicker>
