@@ -119,7 +119,7 @@ const DynamicForm: FC<DynamicFormProps> = props => {
           required
           placeholder="请选择"
           title="用户时间选择"
-          modeType="datetime"
+          modeType="month"
         />
         <NomarRadio
           fieldProps="userRadio1"
