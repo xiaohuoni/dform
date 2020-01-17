@@ -75,6 +75,7 @@ const DynamicForm: FC<DynamicFormProps> = props => {
         userRadio1: 'yes',
         userClick: '点击事件',
         userImgClick: '图片点击事件',
+        datePicker1: new Date()
       }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
@@ -123,17 +124,29 @@ const DynamicForm: FC<DynamicFormProps> = props => {
         <NomarRadio
           fieldProps="userRadio1"
           required
-          placeholder="请选择"
           title="用户选择1"
           data={radioList}
         />
         <NomarRadio
           fieldProps="userRadio2"
           required
-          placeholder="请选择"
           title="用户选择2"
           data={radioList}
           radioType="vertical"
+        />
+        <RangeDatePicker
+          fieldProps="datePicker1"
+          fieldProps2="datePicker2"
+          required
+          title="时间(datetime)"
+          modeType="datetime"
+        />
+        <RangeDatePicker
+          fieldProps="datePicker3"
+          fieldProps2="datePicker4"
+          required
+          title="时间(month)"
+          modeType="month"
         />
       </List>
       <Field {...tailLayout}>
