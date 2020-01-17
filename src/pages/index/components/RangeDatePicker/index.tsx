@@ -1,8 +1,8 @@
 import React, { FC, useState } from 'react';
 import { DatePicker, List } from 'antd-mobile';
-import moment from 'moment';
 import { Field } from 'rc-field-form';
 import { INomarDatePickerProps } from '../NomarDatePicker';
+import { changeDateFormat } from '../../utils';
 
 import styles from '../../styles/index.less';
 
@@ -24,32 +24,6 @@ const RangeDatePicker: FC<IRangeDatePickerProps> = props => {
     maxDate,
     ...otherProps
   } = props;
-
-  /**
-   * 时间展示类型改变事件
-   * @param val
-   */
-  const changeDateFormat = (val: Date) => {
-    let dateFormat = '';
-    switch (modeType) {
-      case 'datetime':
-        dateFormat = moment(val).format('MM-DD hh:mm');
-        break;
-      case 'month':
-        dateFormat = moment(val).format('YYYY-MM');
-        break;
-      case 'time':
-        dateFormat = moment(val).format('hh:mm');
-        break;
-      case 'year':
-        dateFormat = moment(val).format('YYYY');
-        break;
-      default:
-        dateFormat = moment(val).format('YYYY-MM-DD');
-        break;
-    }
-    return dateFormat;
-  };
 
   return (
     <div className={styles.rangeDatePickerStyle}>
@@ -76,7 +50,7 @@ const RangeDatePicker: FC<IRangeDatePickerProps> = props => {
             mode={modeType}
             minDate={minDate}
             maxDate={maxDate}
-            format={value => changeDateFormat(value)}
+            format={value => changeDateFormat(value, modeType)}
           >
             <List.Item arrow="horizontal"></List.Item>
           </DatePicker>
