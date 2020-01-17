@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { DatePicker, List } from 'antd-mobile';
 import moment from 'moment';
 import { Field } from 'rc-field-form';
@@ -11,6 +11,8 @@ export interface IRangeDatePickerProps extends INomarDatePickerProps {
 }
 
 const RangeDatePicker: FC<IRangeDatePickerProps> = props => {
+  const [beginDate, setBeginDate] = useState();
+  const [endDate, setEndDate] = useState();
   const {
     fieldProps,
     fieldProps2,
@@ -53,10 +55,13 @@ const RangeDatePicker: FC<IRangeDatePickerProps> = props => {
         <Field name={fieldProps} rules={rules || [{ required, message: `请选择${title}` }]}>
           <DatePicker
             {...otherProps}
+            value={beginDate}
             mode={modeType}
+            maxDate={endDate}
             format={value => {
               return changeDateFormat(value)
             }}
+            onChange={e => { setBeginDate(e) }}
           >
             <List.Item arrow="horizontal">
               {required && <span className={styles.redStar}>*</span>}
@@ -71,6 +76,8 @@ const RangeDatePicker: FC<IRangeDatePickerProps> = props => {
           <DatePicker
             {...otherProps}
             mode={modeType}
+            minDate={beginDate}
+            onChange={e => { setEndDate(e) }}
             format={value => {
               return changeDateFormat(value)
             }}
