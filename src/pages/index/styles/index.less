@@ -53,3 +53,33 @@
     height: 50px;
   }
 }
+
+.fixRangeInputStyle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  .line {
+    width: 5%;
+  }
+
+  .firstRangeInputStyle {
+    width: 60%;
+  }
+  
+  .secondRangeInputStyle {
+    width: 35%;
+
+    :global {
+      .am-input-control input {
+        text-align: right;
+      }
+
+      .am-list-item.am-input-item {
+        padding-left: 0px;
+      }
+    }
+  }
+
+}

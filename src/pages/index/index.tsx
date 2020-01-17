@@ -12,6 +12,7 @@ import {
   NomarTextArea,
   NomarDatePicker,
   NomarRadio,
+  RangeInput,
 } from './components';
 
 interface DynamicFormProps {}
@@ -133,6 +134,14 @@ const DynamicForm: FC<DynamicFormProps> = props => {
           title="用户选择2"
           data={radioList}
           radioType="vertical"
+        />
+        <RangeInput
+          fieldProps="rangeInput1"
+          fieldProps2="rangeInput2"
+          required
+          placeholder="请输入"
+          title="输入区间"
+          inputType="number"
         />
       </List>
       <Field {...tailLayout}>
