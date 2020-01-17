@@ -31,7 +31,7 @@ const RangeInput: FC<IRangeInputProps> = props => {
       <div className={styles.line}>——</div>
       <div className={styles.endRangeInputStyle}>
         <Field name={fieldProps2} rules={rules || [{ required, message: `请输入${title}` }]}>
-          <InputItem {...otherProps} type={inputType} style={{ ...coverStyle }} />
+          <InputItem {...otherProps} type={inputType} style={{ textAlign: 'right', ...coverStyle }} />
         </Field>
       </div>
     </div>

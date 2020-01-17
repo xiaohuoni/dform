@@ -59,71 +59,88 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  width: 100%;
+
+  :global {
+    .am-list-item .am-list-line .am-list-arrow {
+      display: none;
+    }
+  }
+
+  .beginDatePickerStyle {
+    width: 65%;
+    :global {
+      .am-list-extra {
+        flex-basis: 50%;
+      }
+    }
+  }
+
+  .endDatePickerStyle {
+    width: 30%;
+
+    :global {
+      .am-list-line {
+        justify-content: flex-end;
+      }
+      .am-list-extra {
+        flex-basis: 100%;
+      }
+      .am-list-item {
+        padding-left: 0;
+      }
+    }
+  }
 
   .line {
     width: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 88px;
+    padding-left: 20px;
+    border-bottom: 1px solid #ddd;
   }
+}
+
+.rangeInputStyle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 
   .beginRangeInputStyle {
-    width: 60%;
+    width: 65%;
+    :global {
+      .am-list-extra {
+        flex-basis: 50%;
+      }
+    }
+  }
+
+  .line {
+    width: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 88px;
+    padding-left: 20px;
+    border-bottom: 1px solid #ddd;
   }
 
   .endRangeInputStyle {
-    width: 35%;
+    width: 30%;
 
     :global {
-      .am-input-control input {
-        text-align: right;
+      .am-list-line {
+        justify-content: flex-end;
       }
-
-      .am-list-item.am-input-item {
-        padding-left: 0px;
-        width: 100%;
-
-        :global {
-          .am-list-item .am-list-line .am-list-arrow {
-            display: none;
-          }
-        }
-
-        .beginDatePickerStyle {
-          width: 65%;
-
-          :global {
-            .am-list-extra {
-              flex-basis: 50%;
-            }
-          }
-        }
-
-        .endDatePickerStyle {
-          width: 30%;
-
-          :global {
-            .am-list-line {
-              justify-content: flex-end;
-            }
-
-            .am-list-extra {
-              flex-basis: 100%;
-            }
-
-            .am-list-item {
-              padding-left: 0;
-            }
-          }
-        }
-
+      .am-list-extra {
+        flex-basis: 100%;
       }
-
-      .line {
-        width: 5%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 88px;
-        padding-left: 20px;
-        border-bottom: 1px solid #ddd;
+      .am-list-item {
+        padding-left: 0;
       }
     }
   }
