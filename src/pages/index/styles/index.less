@@ -54,7 +54,7 @@
   }
 }
 
-.rangeInputStyle {
+.rangeDatePickerStyle {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -67,7 +67,7 @@
   .beginRangeInputStyle {
     width: 60%;
   }
-  
+
   .endRangeInputStyle {
     width: 35%;
 
@@ -78,8 +78,53 @@
 
       .am-list-item.am-input-item {
         padding-left: 0px;
+        width: 100%;
+
+        :global {
+          .am-list-item .am-list-line .am-list-arrow {
+            display: none;
+          }
+        }
+
+        .beginDatePickerStyle {
+          width: 65%;
+
+          :global {
+            .am-list-extra {
+              flex-basis: 50%;
+            }
+          }
+        }
+
+        .endDatePickerStyle {
+          width: 30%;
+
+          :global {
+            .am-list-line {
+              justify-content: flex-end;
+            }
+
+            .am-list-extra {
+              flex-basis: 100%;
+            }
+
+            .am-list-item {
+              padding-left: 0;
+            }
+          }
+        }
+
+      }
+
+      .line {
+        width: 5%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 88px;
+        padding-left: 20px;
+        border-bottom: 1px solid #ddd;
       }
     }
   }
-
 }

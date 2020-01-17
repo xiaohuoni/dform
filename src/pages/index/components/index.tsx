@@ -6,3 +6,4 @@ export { default as OnlyReadInput } from './OnlyReadInput';
 export { default as NomarDatePicker } from './NomarDatePicker';
 export { default as NomarRadio } from './NomarRadio';
 export { default as RangeInput } from './RangeInput';
+export { default as RangeDatePicker } from './RangeDatePicker';
