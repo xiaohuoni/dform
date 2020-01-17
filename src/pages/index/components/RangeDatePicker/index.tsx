@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { DatePicker, List } from 'antd-mobile';
 import moment from 'moment';
 import { Field } from 'rc-field-form';
@@ -8,6 +8,8 @@ import styles from '../../styles/index.less';
 
 export interface IRangeDatePickerProps extends INomarDatePickerProps {
   fieldProps2: string;
+  minDate?: Date;
+  maxDate?: Date;
 }
 
 const RangeDatePicker: FC<IRangeDatePickerProps> = props => {
@@ -18,45 +20,46 @@ const RangeDatePicker: FC<IRangeDatePickerProps> = props => {
     modeType = 'date',
     rules = [],
     title,
+    minDate,
+    maxDate,
     ...otherProps
   } = props;
 
   /**
    * 时间展示类型改变事件
-   * @param val 
+   * @param val
    */
-  const changeDateMode = (val: Date) => {
-    let newValue = '';
+  const changeDateFormat = (val: Date) => {
+    let dateFormat = '';
     switch (modeType) {
       case 'datetime':
-        newValue = moment(val).format('MM-DD hh:mm');
+        dateFormat = moment(val).format('MM-DD hh:mm');
         break;
       case 'month':
-        newValue = moment(val).format('YYYY-MM');
+        dateFormat = moment(val).format('YYYY-MM');
         break;
       case 'time':
-        newValue = moment(val).format('hh:mm');
+        dateFormat = moment(val).format('hh:mm');
         break;
       case 'year':
-        newValue = moment(val).format('YYYY');
+        dateFormat = moment(val).format('YYYY');
         break;
-      default: 
-        newValue = moment(val).format('YYYY-MM-DD');
+      default:
+        dateFormat = moment(val).format('YYYY-MM-DD');
         break;
     }
-    return newValue;
-  }
+    return dateFormat;
+  };
 
   return (
-    <div className={styles.fixRangeDatePickerStyle}>
-      <div className={styles.firstDatePickerStyle}>
+    <div className={styles.rangeDatePickerStyle}>
+      <div className={styles.beginDatePickerStyle}>
         <Field name={fieldProps} rules={rules || [{ required, message: `请选择${title}` }]}>
           <DatePicker
             {...otherProps}
             mode={modeType}
-            format={value => {
-              return changeDateMode(value)
-            }}
+            minDate={minDate}
+            maxDate={maxDate}
           >
             <List.Item arrow="horizontal">
               {required && <span className={styles.redStar}>*</span>}
@@ -66,14 +69,14 @@ const RangeDatePicker: FC<IRangeDatePickerProps> = props => {
         </Field>
       </div>
       <div className={styles.line}>——</div>
-      <div className={styles.secondDatePickerStyle}>
+      <div className={styles.endDatePickerStyle}>
         <Field name={fieldProps2} rules={rules || [{ required, message: `请选择${title}` }]}>
           <DatePicker
             {...otherProps}
             mode={modeType}
-            format={value => {
-              return changeDateMode(value)
-            }}
+            minDate={minDate}
+            maxDate={maxDate}
+            format={value => changeDateFormat(value)}
           >
             <List.Item arrow="horizontal"></List.Item>
           </DatePicker>
