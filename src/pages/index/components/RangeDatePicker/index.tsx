@@ -25,37 +25,37 @@ const RangeDatePicker: FC<IRangeDatePickerProps> = props => {
    * 时间展示类型改变事件
    * @param val 
    */
-  const changeDateMode = (val: Date) => {
-    let newValue = '';
+  const changeDateFormat = (val: Date) => {
+    let dateFormat = '';
     switch (modeType) {
       case 'datetime':
-        newValue = moment(val).format('MM-DD hh:mm');
+        dateFormat = moment(val).format('MM-DD hh:mm');
         break;
       case 'month':
-        newValue = moment(val).format('YYYY-MM');
+        dateFormat = moment(val).format('YYYY-MM');
         break;
       case 'time':
-        newValue = moment(val).format('hh:mm');
+        dateFormat = moment(val).format('hh:mm');
         break;
       case 'year':
-        newValue = moment(val).format('YYYY');
+        dateFormat = moment(val).format('YYYY');
         break;
       default: 
-        newValue = moment(val).format('YYYY-MM-DD');
+      dateFormat = moment(val).format('YYYY-MM-DD');
         break;
     }
-    return newValue;
+    return dateFormat;
   }
 
   return (
-    <div className={styles.fixRangeDatePickerStyle}>
-      <div className={styles.firstDatePickerStyle}>
+    <div className={styles.rangeDatePickerStyle}>
+      <div className={styles.beginDatePickerStyle}>
         <Field name={fieldProps} rules={rules || [{ required, message: `请选择${title}` }]}>
           <DatePicker
             {...otherProps}
             mode={modeType}
             format={value => {
-              return changeDateMode(value)
+              return changeDateFormat(value)
             }}
           >
             <List.Item arrow="horizontal">
@@ -66,13 +66,13 @@ const RangeDatePicker: FC<IRangeDatePickerProps> = props => {
         </Field>
       </div>
       <div className={styles.line}>——</div>
-      <div className={styles.secondDatePickerStyle}>
+      <div className={styles.endDatePickerStyle}>
         <Field name={fieldProps2} rules={rules || [{ required, message: `请选择${title}` }]}>
           <DatePicker
             {...otherProps}
             mode={modeType}
             format={value => {
-              return changeDateMode(value)
+              return changeDateFormat(value)
             }}
           >
             <List.Item arrow="horizontal"></List.Item>
