@@ -6,26 +6,23 @@ import { Field } from 'rc-field-form';
 import styles from '../../styles/index.less';
 
 export interface INomarInputProps extends InputItemPropsType {
-  inputType: InputItemPropsType['type'];
+  inputType?: InputItemPropsType['type'];
   coverStyle?: React.CSSProperties;
   title: string;
   required?: boolean;
   fieldProps: string;
   rules?: [];
-  imgExtra?: any;
-  imgExtraClick?: (e: React.MouseEvent<HTMLElement>) => void;
+  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
 }
 
 const NomarInput: FC<INomarInputProps> = props => {
   const {
-    inputType,
+    inputType = 'text',
     coverStyle,
     title,
     required = false,
     fieldProps,
     rules,
-    imgExtra,
-    imgExtraClick,
     ...otherProps
   } = props;
   return (
@@ -34,13 +31,12 @@ const NomarInput: FC<INomarInputProps> = props => {
         <InputItem
           {...otherProps}
           type={inputType}
-          style={{ width: imgExtra ? '86%' : '100%', textAlign: 'right', ...coverStyle }}
+          style={{ textAlign: 'right', ...coverStyle }}
         >
           {required && <span className={styles.redStar}>*</span>}
           {title}
         </InputItem>
       </Field>
-      {imgExtra && <img src={imgExtra} onClick={imgExtraClick} className={styles.imgExtra} />}
     </div>
   );
 };
