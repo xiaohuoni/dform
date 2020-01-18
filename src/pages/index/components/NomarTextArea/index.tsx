@@ -7,7 +7,7 @@ import styles from '../../styles/index.less';
 
 export interface INomarTextAreaProps extends TextAreaItemPropsType {
   coverStyle?: React.CSSProperties;
-  title: string;
+  title?: string;
   required?: boolean;
   fieldProps: string;
   rules?: [];
@@ -17,7 +17,6 @@ export interface INomarTextAreaProps extends TextAreaItemPropsType {
 const NomarTextArea: FC<INomarTextAreaProps> = props => {
   const {
     coverStyle,
-    title,
     required = false,
     fieldProps,
     rules,
@@ -36,14 +35,14 @@ const NomarTextArea: FC<INomarTextAreaProps> = props => {
           className={styles.redStar}
           style={{
             position: 'absolute',
-            top: '0',
+            top: '30px',
             zIndex: 2,
           }}
         >
           *
         </span>
       )}
-      <Field name={fieldProps} rules={rules || [{ required, message: `请输入${title}` }]}>
+      <Field name={fieldProps} rules={rules || [{ required, message: `请输入` }]}>
         <TextareaItem {...otherProps} style={coverStyle} rows={rows} />
       </Field>
     </List.Item>

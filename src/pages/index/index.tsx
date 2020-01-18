@@ -75,7 +75,8 @@ const DynamicForm: FC<DynamicFormProps> = props => {
         userRadio1: 'yes',
         userClick: '点击事件',
         userImgClick: '图片点击事件',
-        datePicker1: new Date()
+        datePicker1: new Date(),
+        usertextarea1: '123123123'
       }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
@@ -113,7 +114,9 @@ const DynamicForm: FC<DynamicFormProps> = props => {
           imgExtra={PositionIcon}
           imgExtraClick={e => console.log(e)}
         />
-        <NomarTextArea fieldProps="usertextarea" required placeholder="请选择" title="用户选择" />
+        <NomarTextArea fieldProps="usertextarea1" required placeholder="请选择" title="用户选择" />
+        <NomarTextArea fieldProps="usertextarea2" required placeholder="请选择" />
+        <NomarTextArea fieldProps="usertextarea3" placeholder="请选择" />
         <NomarDatePicker
           fieldProps="userDataPicker"
           required
