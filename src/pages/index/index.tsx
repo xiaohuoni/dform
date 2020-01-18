@@ -3,6 +3,7 @@ import { Button, List } from 'antd-mobile';
 import Form, { Field, useForm } from 'rc-field-form';
 import { Store } from 'rc-field-form/es/interface';
 import PositionIcon from './assets/position_ico.png';
+import PhotoIcon from './assets/photo.png';
 
 import {
   NomarInput,
@@ -68,6 +69,10 @@ const DynamicForm: FC<DynamicFormProps> = props => {
     return <img src={PositionIcon} onClick={e => console.log(e)} />;
   };
 
+  const photoImg = () => {
+    return <img src={PhotoIcon} style={{ width: '0.8rem', height: '0.6rem' }} />
+  }
+
   return (
     <Form
       form={form}
@@ -115,6 +120,13 @@ const DynamicForm: FC<DynamicFormProps> = props => {
           title="图片div"
           editable={false}
           extra={extraImg()}
+        />
+        <NomarInput
+          fieldProps="userPhoto"
+          placeholder=''
+          title={'身份展示'}
+          editable={false}
+          extra={photoImg()}
         />
         <NomarPicker
           fieldProps="userdata"
