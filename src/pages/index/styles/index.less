@@ -94,7 +94,6 @@
     align-items: center;
     justify-content: center;
     height: 88px;
-    padding-left: 20px;
     border-bottom: 1px solid #ddd;
   }
 }
@@ -111,6 +110,48 @@
     
     .am-list-item {
       padding-right: 0px !important;
+    }
+  }
+}
+
+.extraInputStyle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  .beginExtraInputStyle {
+    width: 65%;
+  }
+
+  .line {
+    width: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 88px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .endExtraInputStyle {
+    width: 30%;
+
+    :global {
+      .am-list-item.am-input-item {
+        padding-left: 0px;
+      }
+
+      .am-list-item {
+        padding-left: 0px;
+      }
+
+      .am-list-line {
+        justify-content: flex-end;
+      }
+
+      .am-list-extra {
+        flex-basis: 100%;
+      }
     }
   }
 }
