@@ -13,6 +13,7 @@ import {
   NomarDatePicker,
   NomarRadio,
   RangeDatePicker,
+  ExtraInput,
 } from './components';
 
 interface DynamicFormProps {}
@@ -127,6 +128,9 @@ const DynamicForm: FC<DynamicFormProps> = props => {
           title={'身份展示'}
           editable={false}
           extra={photoImg()}
+        />
+        <ExtraInput
+          
         />
         <NomarPicker
           fieldProps="userdata"
