@@ -131,7 +131,33 @@ const DynamicForm: FC<DynamicFormProps> = props => {
           extra={photoImg()}
         />
         <ExtraInput
-          
+          fieldProps="extraInput1"
+          fieldProps2="extraInput2"
+          placeholder="请输入1"
+          placeholder2="请输入"
+          title="文字区间1"
+          required
+        />
+        <ExtraInput
+          fieldProps="extraInput3"
+          fieldProps2="extraInput4"
+          placeholder="请输入1"
+          placeholder2="请输入2"
+          title="文字区间2"
+          required
+          extra={extraImg()}
+          extraType="input"
+        />
+        <ExtraInput
+          fieldProps="extraInput5"
+          fieldProps2="extraInput6"
+          placeholder="请输入"
+          placeholder2="请选择"
+          title="单位选择"
+          required
+          data={seasons}
+          // extra={extraImg()}
+          extraType="select"
         />
         <NomarPicker
           fieldProps="userdata"
