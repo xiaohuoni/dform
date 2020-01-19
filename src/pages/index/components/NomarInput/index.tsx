@@ -29,6 +29,7 @@ const NomarInput: FC<INomarInputProps> = props => {
     <div className={styles.fixNomarInputStyle}>
       <Field name={fieldProps} rules={rules || [{ required, message: `请输入${title}` }]}>
         <InputItem
+          id={fieldProps}
           {...otherProps}
           type={inputType}
           style={{ textAlign: 'right', ...coverStyle }}

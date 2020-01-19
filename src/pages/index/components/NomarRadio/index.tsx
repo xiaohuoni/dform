@@ -52,7 +52,7 @@ const NomarRadio: FC<INomarRadioProps> = props => {
       <div className={styles.fixRadioVerticalStyle} key={fieldProps} style={coverStyle}>
         <p>
           {required && <span className={styles.redStar}>*</span>}
-          {title}
+          <span id={fieldProps}>{title}</span>
         </p>
         {
           <Field name={fieldProps} rules={rules || [{ required, message: `请选择${title}` }]}>
