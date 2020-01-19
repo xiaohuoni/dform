@@ -3,12 +3,12 @@ import { Button, List } from 'antd-mobile';
 import Form, { Field, useForm } from 'rc-field-form';
 import { Store } from 'rc-field-form/es/interface';
 import PositionIcon from './assets/position_ico.png';
+import PhotoIcon from './assets/photo.png';
 
 import {
   NomarInput,
   NomarPicker,
   NomarSwitch,
-  OnlyReadInput,
   NomarTextArea,
   NomarDatePicker,
   NomarRadio,
@@ -65,6 +65,14 @@ const DynamicForm: FC<DynamicFormProps> = props => {
     console.log('Failed:', errorInfo);
   };
 
+  const extraImg = () => {
+    return <img src={PositionIcon} onClick={e => console.log(e)} />;
+  };
+
+  const photoImg = () => {
+    return <img src={PhotoIcon} style={{ width: '0.8rem', height: '0.6rem' }} />
+  }
+
   return (
     <Form
       form={form}
@@ -73,10 +81,11 @@ const DynamicForm: FC<DynamicFormProps> = props => {
         username: '123',
         userRadio2: 'no',
         userRadio1: 'yes',
-        userClick: '点击事件',
-        userImgClick: '图片点击事件',
+        userClick: '文字点击事件',
+        userImgClick: 'extra展示',
         datePicker1: new Date(),
-        usertextarea1: '123123123'
+        userEditable: '用户不可编辑',
+        usertextarea1: '多行文本编辑框...',
       }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
@@ -89,6 +98,37 @@ const DynamicForm: FC<DynamicFormProps> = props => {
           title="用户名"
           inputType="text"
         />
+        <NomarInput
+          editable={false}
+          fieldProps="userEditable"
+          required
+          placeholder="请选择"
+          title="用户选择"
+        />
+        <NomarInput
+          fieldProps="userClick"
+          required
+          placeholder="点击事件"
+          title="点击文字"
+          editable={false}
+          onClick={e => console.log(e)}
+          extra="¥"
+        />
+        <NomarInput
+          fieldProps="userImgClick"
+          required
+          placeholder="点击事件"
+          title="图片div"
+          editable={false}
+          extra={extraImg()}
+        />
+        <NomarInput
+          fieldProps="userPhoto"
+          placeholder=''
+          title={'身份展示'}
+          editable={false}
+          extra={photoImg()}
+        />
         <NomarPicker
           fieldProps="userdata"
           required
@@ -96,27 +136,6 @@ const DynamicForm: FC<DynamicFormProps> = props => {
           title="用户数据"
           data={seasons}
         />
-        <NomarSwitch fieldProps="userswitch" required placeholder="请选择" title="用户选择" />
-        <OnlyReadInput fieldProps="userswitch" required placeholder="请选择" title="用户选择" />
-        <OnlyReadInput
-          fieldProps="userClick"
-          required
-          placeholder="点击事件"
-          title="点击事件"
-          onClick={e => console.log(e)}
-          extra="¥"
-        />
-        <OnlyReadInput
-          fieldProps="userImgClick"
-          required
-          placeholder="点击事件"
-          title="图片点击"
-          imgExtra={PositionIcon}
-          imgExtraClick={e => console.log(e)}
-        />
-        <NomarTextArea fieldProps="usertextarea1" required placeholder="请选择" title="用户选择" />
-        <NomarTextArea fieldProps="usertextarea2" required placeholder="请选择" />
-        <NomarTextArea fieldProps="usertextarea3" placeholder="请选择" />
         <NomarDatePicker
           fieldProps="userDataPicker"
           required
@@ -124,19 +143,7 @@ const DynamicForm: FC<DynamicFormProps> = props => {
           title="用户时间选择"
           modeType="month"
         />
-        <NomarRadio
-          fieldProps="userRadio1"
-          required
-          title="用户选择1"
-          data={radioList}
-        />
-        <NomarRadio
-          fieldProps="userRadio2"
-          required
-          title="用户选择2"
-          data={radioList}
-          radioType="vertical"
-        />
+        <NomarSwitch fieldProps="userswitch" required placeholder="请选择" title="用户选择" />
         <RangeDatePicker
           fieldProps="datePicker1"
           fieldProps2="datePicker2"
@@ -153,6 +160,17 @@ const DynamicForm: FC<DynamicFormProps> = props => {
           title="时间(month)"
           modeType="month"
         />
+        <NomarRadio fieldProps="userRadio1" required title="用户选择1" data={radioList} />
+        <NomarRadio
+          fieldProps="userRadio2"
+          required
+          title="用户选择2"
+          data={radioList}
+          radioType="vertical"
+        />
+        <NomarTextArea fieldProps="usertextarea1" required placeholder="请选择" title="用户选择" />
+        <NomarTextArea fieldProps="usertextarea2" required placeholder="请选择" />
+        <NomarTextArea fieldProps="usertextarea3" placeholder="请选择" />
       </List>
       <Field {...tailLayout}>
         <Button type="primary" onClick={() => form.submit()}>
