@@ -85,7 +85,7 @@ const DynamicForm: FC<DynamicFormProps> = props => {
         userImgClick: 'extra展示',
         datePicker1: new Date(),
         userEditable: '用户不可编辑',
-        usertextarea1: '多行文本编辑框...',
+        usertextarea1: '多行文本编辑框，此处可编辑...',
       }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
@@ -168,8 +168,8 @@ const DynamicForm: FC<DynamicFormProps> = props => {
           data={radioList}
           radioType="vertical"
         />
-        <NomarTextArea fieldProps="usertextarea1" required placeholder="请选择" title="用户选择" />
-        <NomarTextArea fieldProps="usertextarea2" required placeholder="请选择" />
+        <NomarTextArea fieldProps="usertextarea2" required placeholder="请输入..." />
+        <NomarTextArea fieldProps="usertextarea1" required placeholder="请选择" title="文本输入" />
         <NomarTextArea fieldProps="usertextarea3" placeholder="请选择" />
       </List>
       <Field {...tailLayout}>

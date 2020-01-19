@@ -20,8 +20,8 @@ const NomarTextArea: FC<INomarTextAreaProps> = props => {
     required = false,
     fieldProps,
     rules,
-    placeholder,
     rows = 3,
+    title,
     ...otherProps
   } = props;
   return (
@@ -29,21 +29,22 @@ const NomarTextArea: FC<INomarTextAreaProps> = props => {
       style={{
         position: 'relative',
       }}
+      className={styles.textAreaStyle}
     >
       {required && (
         <span
           className={styles.redStar}
           style={{
             position: 'absolute',
-            top: '30px',
+            top: '14px',
             zIndex: 2,
           }}
         >
           *
         </span>
       )}
-      <Field name={fieldProps} rules={rules || [{ required, message: `请输入` }]}>
-        <TextareaItem {...otherProps} style={coverStyle} rows={rows} />
+      <Field name={fieldProps} rules={rules || [{ required, message: `请输入${title}` }]}>
+        <TextareaItem {...otherProps} title={title} style={coverStyle} rows={rows} />
       </Field>
     </List.Item>
   );
