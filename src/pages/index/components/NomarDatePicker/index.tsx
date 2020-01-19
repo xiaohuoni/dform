@@ -20,14 +20,14 @@ const NomarDatePicker: FC<INomarDatePickerProps> = props => {
 
   return (
     <Field name={fieldProps} rules={rules || [{ required, message: `请选择${title}` }]}>
-      <DatePicker 
-        {...otherProps} 
+      <DatePicker
+        {...otherProps}
         mode={modeType}
         format={value => changeDateFormat(value, modeType)}
       >
         <List.Item arrow="horizontal">
           {required && <span className={styles.redStar}>*</span>}
-          {title}
+          <span id={fieldProps}>{title}</span>
         </List.Item>
       </DatePicker>
     </Field>

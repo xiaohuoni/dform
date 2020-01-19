@@ -5,13 +5,14 @@ import { Field } from 'rc-field-form';
 
 import styles from '../../styles/index.less';
 
-export interface INomarPickerProps extends PickerPropsType {
+export interface INomarPickerProps extends Omit<PickerPropsType, 'data'> {
   coverStyle?: React.CSSProperties;
   title: string;
   required?: boolean;
   fieldProps: string;
   rules?: [];
   placeholder?: PickerPropsType['extra'];
+  data?: PickerPropsType['data'];
 }
 
 const NomarPicker: FC<INomarPickerProps> = props => {
@@ -29,7 +30,7 @@ const NomarPicker: FC<INomarPickerProps> = props => {
       <Picker {...otherProps} style={coverStyle} cascade={false} extra={placeholder}>
         <List.Item arrow="horizontal">
           {required && <span className={styles.redStar}>*</span>}
-          {title}
+          <span id={fieldProps}>{title}</span>
         </List.Item>
       </Picker>
     </Field>

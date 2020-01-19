@@ -29,15 +29,11 @@ const RangeDatePicker: FC<IRangeDatePickerProps> = props => {
     <div className={styles.rangeDatePickerStyle}>
       <div className={styles.beginDatePickerStyle}>
         <Field name={fieldProps} rules={rules || [{ required, message: `请选择${title}` }]}>
-          <DatePicker
-            {...otherProps}
-            mode={modeType}
-            minDate={minDate}
-            maxDate={maxDate}
-          >
+          <DatePicker {...otherProps} mode={modeType} minDate={minDate} maxDate={maxDate}>
             <List.Item arrow="horizontal">
               {required && <span className={styles.redStar}>*</span>}
-              {title}
+              <span id={fieldProps}>{title}</span>
+              <span id={fieldProps2}></span>
             </List.Item>
           </DatePicker>
         </Field>
