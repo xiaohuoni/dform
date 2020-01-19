@@ -64,7 +64,7 @@ const ExtraInput: FC<IExtraInputProps> = props => {
       >
         <NomarInput {...props} extra="" />
       </div>
-      <div className={extraType === 'input' ? styles.line : styles.hidden}>——</div>
+      {extraType === 'input' && <div className={styles.line}>——</div>}
       <div className={styles.endExtraInputStyle}>{extraDiv()}</div>
     </div>
   );
