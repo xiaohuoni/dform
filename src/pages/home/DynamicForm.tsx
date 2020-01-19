@@ -47,10 +47,50 @@ const nodeEnvIsDev = process.env.NODE_ENV === 'development';
 
 interface NewFieldPickerProps {
   onChange?: (t: any) => void;
-  value?: [];
+  value?: IFormItemProps[];
 }
+
+const InitFormData = [
+  {
+    type: 'input',
+    fieldProps: 'username',
+    required: true,
+    placeholder: '请输入',
+    title: '用户名',
+    inputType: 'text',
+  },
+] as IFormItemProps[];
+
+const InitFormValue = {
+  username: '张三',
+};
+const getFormItem = (
+  formItem: IFormItemProps,
+  allDisabled: boolean,
+  onClick?: (formItem: IFormItemProps) => void,
+) => {
+  const { type, disabled = allDisabled, ...otherProps } = formItem;
+  const FormItemComponent = FormItemType[formItem.type];
+  return (
+    <FormItemComponent
+      {...otherProps}
+      key={formItem.fieldProps}
+      disabled={disabled}
+      onClick={() => onClick && onClick(formItem)}
+    />
+  );
+};
+
 const NewFieldPicker: FC<NewFieldPickerProps> = ({ onChange, value }) => {
   const [modal, setModal] = useState(false);
+  const [alitaDformExtraField, setAlitaDformExtraField] = useState<IFormItemProps[]>(value || []);
+  const onSelectFieldItem = (formItem: IFormItemProps) => {
+    console.log('use select', formItem);
+    alitaDformExtraField.push(formItem);
+    setAlitaDformExtraField(alitaDformExtraField);
+    onChange && onChange(alitaDformExtraField);
+  };
+
   return (
     <>
       <Button type="primary" onClick={() => setModal(true)}>
@@ -59,7 +99,8 @@ const NewFieldPicker: FC<NewFieldPickerProps> = ({ onChange, value }) => {
       <WhiteSpace />
       <Modal popup visible={modal} onClose={() => setModal(false)} animationType="slide-up">
         <List renderHeader={() => <div>选择表单类型</div>}>
-          <Button type="primary" onClick={() => onChange && onChange('1')}>
+          {InitFormData.map(item => getFormItem(item, false, onSelectFieldItem))}
+          <Button type="primary" onClick={() => setModal(false)}>
             完成
           </Button>
         </List>
@@ -81,11 +122,7 @@ const DynamicForm: FC<IDynamicFormProps> = ({
   useEffect(() => {
     form.setFieldsValue(formsValues as Store);
   }, [formsValues]);
-  const getFormItem = (formItem: IFormItemProps, allDisabled: boolean) => {
-    const { type, disabled = allDisabled, ...otherProps } = formItem;
-    const FormItemComponent = FormItemType[formItem.type];
-    return <FormItemComponent {...otherProps} key={formItem.fieldProps} disabled={disabled} />;
-  };
+
   const defaultFailed = (errorInfo: ValidateErrorEntity) => {
     if (!errorInfo || !errorInfo.errorFields || errorInfo.errorFields.length === 0) {
       onFinishFailed && onFinishFailed(errorInfo);
@@ -100,15 +137,22 @@ const DynamicForm: FC<IDynamicFormProps> = ({
     scrollToField(errorInfo.errorFields[0].name[0]);
     onFinishFailed && onFinishFailed(errorInfo);
   };
+  const tureFormsValues = data.length === 0 ? InitFormValue : formsValues;
+  console.log(tureFormsValues);
+
   return (
     <Form
       form={form}
-      initialValues={formsValues}
+      initialValues={tureFormsValues}
       onFinish={onFinish}
       onFinishFailed={defaultFailed}
+      onValuesChange={changFeil => {
+        console.log(changFeil);
+      }}
     >
       <List>
         {data.map(item => getFormItem(item, allDisabled))}
+
         {isDev && data.length === 0 && (
           <Field name="alitaDformExtraField">
             <NewFieldPicker />

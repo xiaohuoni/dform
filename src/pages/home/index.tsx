@@ -34,7 +34,6 @@ const seasons = [
 
 const Page: FC = props => {
   const [form] = useForm();
-  const [a, setA] = useState(0);
   const onFinish = (values: Store) => {
     console.log('Success:', values);
   };
@@ -175,12 +174,12 @@ const Page: FC = props => {
     },
   ] as IFormItemProps[];
   const formsValues = {
-    username: a,
+    username: 0,
   };
   const formProps = {
     onFinish,
-    data: formsData,
-    formsValues,
+    data: [],
+    // formsValues,
     form,
     // allDisabled: true,
   };
@@ -191,14 +190,6 @@ const Page: FC = props => {
           Submit
         </Button>
       </Field>
-      <Button
-        type="primary"
-        onClick={() => {
-          setA(a + 1);
-        }}
-      >
-        动态修改初始值{a}
-      </Button>
     </DynamicForm>
   );
 };
