@@ -61,7 +61,14 @@ const ExtraInput: FC<IExtraInputProps> = props => {
         className={styles.beginExtraInputStyle}
         style={{ width: extraType === 'input' ? '65%' : '70%' }}
       >
-        <NomarInput {...props} extra="" />
+        <NomarInput
+          {...otherProps}
+          title={title}
+          required={required}
+          rules={rules}
+          coverStyle={coverStyle}
+          extra=""
+        />
       </div>
       {extraType === 'input' && <div className={styles.line}>——</div>}
       <div className={styles.endExtraInputStyle}>{extraDiv()}</div>

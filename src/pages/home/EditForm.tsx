@@ -143,7 +143,17 @@ const EditForm: FC<IEditFormProps> = ({ data = [] as any, onChange }) => {
   const [editData, setEditData] = useState(data);
   const onFinish = (values: Store) => {
     console.log('Success:', values);
-    onChange && onChange(values);
+    // 选择类型的初始值要手动转化一下 3/3
+    const newFormItem = { ...values };
+    const { inputType, modeType } = newFormItem;
+    if (inputType && typeof inputType !== 'string') {
+      newFormItem.inputType = inputType[0] as InputItemPropsType['type'];
+    }
+    if (modeType && typeof modeType !== 'string') {
+      newFormItem.modeType = modeType[0] as DatePickerPropsType['mode'];
+    }
+    console.log(newFormItem);
+    onChange && onChange(newFormItem);
   };
 
   const onFinishFailed = (errorInfo: ValidateErrorEntity) => {
@@ -151,7 +161,9 @@ const EditForm: FC<IEditFormProps> = ({ data = [] as any, onChange }) => {
   };
   return (
     <div style={{ textAlign: 'left' }}>
-      <List renderHeader={() => '效果演示'}>{getShowDeitItem(editData)}</List>
+      <Form>
+        <List renderHeader={() => '效果演示'}>{getShowDeitItem(editData)}</List>
+      </Form>
       <Form
         form={form}
         initialValues={editData}

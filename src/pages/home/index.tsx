@@ -180,33 +180,12 @@ const Page: FC = props => {
     onFinish,
     data: [
       {
-        type: 'select',
-        fieldProps: 'userdata',
+        type: 'input',
+        fieldProps: 'username',
         required: true,
-        placeholder: '请选择',
-        title: '用户数据',
-        data: [
-          [
-            {
-              label: '2013',
-              value: '2013',
-            },
-            {
-              label: '2014',
-              value: '2014',
-            },
-          ],
-          [
-            {
-              label: '春',
-              value: '春',
-            },
-            {
-              label: '夏',
-              value: '夏',
-            },
-          ],
-        ],
+        placeholder: '请输入',
+        title: '用户名',
+        inputType: 'bankCard',
       },
     ] as IFormItemProps[],
     // formsValues,

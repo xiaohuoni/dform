@@ -67,6 +67,8 @@ export interface IDynamicFormProps {
 const nodeEnvIsDev = process.env.NODE_ENV === 'development';
 
 export const getFormItem = (formItem: IFormItemProps, allDisabled: boolean) => {
+  console.log(formItem);
+
   const { type, disabled = allDisabled, ...otherProps } = formItem;
   const FormItemComponent = FormItemType[formItem.type];
   return <FormItemComponent {...otherProps} key={formItem.fieldProps} disabled={disabled} />;
@@ -95,7 +97,7 @@ const DynamicForm: FC<IDynamicFormProps> = ({
   data,
   form,
   allDisabled = false,
-  formsValues,
+  formsValues = {},
   onFinish,
   onFinishFailed,
   isDev,
@@ -107,19 +109,23 @@ const DynamicForm: FC<IDynamicFormProps> = ({
   const showAddItem = isDev || (nodeEnvIsDev && data.length === 0);
 
   return (
-    <Form
-      form={form}
-      initialValues={formsValues}
-      onFinish={onFinish}
-      onFinishFailed={(errorInfo: ValidateErrorEntity) => defaultFailed(errorInfo, onFinishFailed)}
-      onValuesChange={changFeil => {
-        console.log(changFeil);
-      }}
-    >
-      <List>{data.map(item => getFormItem(item, allDisabled))}</List>
+    <>
+      <Form
+        form={form}
+        initialValues={formsValues}
+        onFinish={onFinish}
+        onFinishFailed={(errorInfo: ValidateErrorEntity) =>
+          defaultFailed(errorInfo, onFinishFailed)
+        }
+        onValuesChange={changFeil => {
+          console.log(changFeil);
+        }}
+      >
+        <List>{data.map(item => getFormItem(item, allDisabled))}</List>
+        {children}
+      </Form>
       {showAddItem && <NewFieldPicker />}
-      {children}
-    </Form>
+    </>
   );
 };
 

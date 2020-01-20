@@ -1,11 +1,9 @@
 import React, { FC, useState } from 'react';
 import { Button, WingBlank, WhiteSpace, Modal, List } from 'antd-mobile';
 import copy from 'copy-to-clipboard';
-import Form, { Field, useForm } from 'rc-field-form';
+import Form from 'rc-field-form';
 import { Store, ValidateErrorEntity } from 'rc-field-form/es/interface';
-import { InputItemPropsType } from 'antd-mobile/es/input-item/PropsType';
-import { DatePickerPropsType } from 'antd-mobile/es/date-picker/PropsType';
-import { IFormItemProps, getFormItem, defaultFailed } from './DynamicForm';
+import { IFormItemProps, getFormItem } from './DynamicForm';
 import EditForm from './EditForm';
 
 interface NewFieldPickerProps {
@@ -171,7 +169,6 @@ const InitFormData = [
     placeholder: '请输入',
     placeholder2: '请选择',
     title: '时间(datetime)',
-    minDate: new Date(),
     modeType: 'datetime',
   },
 ] as IFormItemProps[];
@@ -181,20 +178,11 @@ const InitFormValue = {
 };
 
 const NewFieldPicker: FC<NewFieldPickerProps> = ({ onChange, value }) => {
-  const [alitaDform] = useForm();
   const [modal, setModal] = useState(false);
   const [modal2, setModal2] = useState(false);
   const [selectFieldItem, setSelectFieldItem] = useState<IFormItemProps>();
   const [alitaDformExtraField, setAlitaDformExtraField] = useState<IFormItemProps[]>(value || []);
   const onSelectFieldItem = (formItem: IFormItemProps) => {
-    // 选择类型的初始值要手动转化一下 3/3
-    const { inputType, modeType } = formItem;
-    if (inputType) {
-      formItem.inputType = inputType[0] as InputItemPropsType['type'];
-    }
-    if (modeType) {
-      formItem.modeType = modeType[0] as DatePickerPropsType['mode'];
-    }
     alitaDformExtraField.push(formItem);
     setAlitaDformExtraField(alitaDformExtraField);
     // onChange && onChange(alitaDformExtraField);
@@ -225,60 +213,59 @@ const NewFieldPicker: FC<NewFieldPickerProps> = ({ onChange, value }) => {
 
   return (
     <>
-      <List
-        renderHeader={() => (
-          <div
-            style={{
-              textAlign: 'center',
-              display: alitaDformExtraField.length > 0 ? 'block' : 'none',
-            }}
-          >
-            以下表单为编辑生成，请手动保存到代码中
-          </div>
-        )}
-      >
-        {alitaDformExtraField.map(item => getFormItem(item, false))}
-      </List>
-      <Form
-        form={alitaDform}
-        initialValues={InitFormValue}
-        onFinish={onFinish}
-        onFinishFailed={(errorInfo: ValidateErrorEntity) => defaultFailed(errorInfo)}
-        onValuesChange={changFeil => {
-          console.log(changFeil);
+      <Form>
+        <List
+          renderHeader={() => (
+            <div
+              style={{
+                textAlign: 'center',
+                display: alitaDformExtraField.length > 0 ? 'block' : 'none',
+              }}
+            >
+              以下表单为编辑生成，请手动保存到代码中
+            </div>
+          )}
+        >
+          {alitaDformExtraField.map(item => getFormItem(item, false))}
+        </List>
+      </Form>
+
+      <WingBlank size="lg">
+        <Button
+          inline
+          type="primary"
+          onClick={() => setModal(true)}
+          style={{
+            width: '50%',
+          }}
+        >
+          新增表单
+        </Button>
+        <Button
+          inline
+          type="primary"
+          onClick={() => copy(JSON.stringify(alitaDformExtraField))}
+          style={{
+            width: '50%',
+          }}
+        >
+          拷贝配置
+        </Button>
+      </WingBlank>
+      <WhiteSpace />
+      <Modal
+        popup
+        visible={modal}
+        onClose={() => setModal(false)}
+        animationType="slide-up"
+        style={{
+          height: '12rem',
         }}
       >
-        <WingBlank size="lg">
-          <Button
-            inline
-            type="primary"
-            onClick={() => setModal(true)}
-            style={{
-              width: '50%',
-            }}
-          >
-            新增表单
-          </Button>
-          <Button
-            inline
-            type="primary"
-            onClick={() => copy(JSON.stringify(alitaDformExtraField))}
-            style={{
-              width: '50%',
-            }}
-          >
-            拷贝配置
-          </Button>
-        </WingBlank>
-        <WhiteSpace />
-        <Modal
-          popup
-          visible={modal}
-          onClose={() => setModal(false)}
-          animationType="slide-up"
-          style={{
-            height: '12rem',
-          }}
+        <Form
+          initialValues={InitFormValue}
+          onFinish={onFinish}
+          onFinishFailed={(errorInfo: ValidateErrorEntity) => defaultFailed(errorInfo)}
         >
           <List
             renderHeader={() => (
@@ -320,8 +307,8 @@ const NewFieldPicker: FC<NewFieldPickerProps> = ({ onChange, value }) => {
               取消
             </Button>
           </List>
-        </Modal>
-      </Form>
+        </Form>
+      </Modal>
       <Modal popup visible={modal2} onClose={() => setModal2(false)} animationType="slide-up">
         <List
           renderHeader={() => (
