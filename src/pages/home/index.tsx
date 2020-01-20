@@ -34,7 +34,6 @@ const seasons = [
 
 const Page: FC = props => {
   const [form] = useForm();
-  const [a, setA] = useState(0);
   const onFinish = (values: Store) => {
     console.log('Success:', values);
   };
@@ -175,13 +174,45 @@ const Page: FC = props => {
     },
   ] as IFormItemProps[];
   const formsValues = {
-    username: a,
+    username: 0,
   };
   const formProps = {
     onFinish,
-    data: formsData,
-    formsValues,
+    data: [
+      {
+        type: 'select',
+        fieldProps: 'userdata',
+        required: true,
+        placeholder: '请选择',
+        title: '用户数据',
+        data: [
+          [
+            {
+              label: '2013',
+              value: '2013',
+            },
+            {
+              label: '2014',
+              value: '2014',
+            },
+          ],
+          [
+            {
+              label: '春',
+              value: '春',
+            },
+            {
+              label: '夏',
+              value: '夏',
+            },
+          ],
+        ],
+      },
+    ] as IFormItemProps[],
+    // formsValues,
+
     form,
+    isDev: true,
     // allDisabled: true,
   };
   return (
@@ -191,14 +222,6 @@ const Page: FC = props => {
           Submit
         </Button>
       </Field>
-      <Button
-        type="primary"
-        onClick={() => {
-          setA(a + 1);
-        }}
-      >
-        动态修改初始值{a}
-      </Button>
     </DynamicForm>
   );
 };

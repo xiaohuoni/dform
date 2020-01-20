@@ -18,6 +18,12 @@ import {
 
 interface DynamicFormProps {}
 
+const PikerData = ['text', 'bankCard', 'phone', 'password', 'number', 'digit', 'money'].map(
+  (item: string) => ({
+    value: item,
+    label: item,
+  }),
+) as any
 const tailLayout = {
   wrapperCol: { offset: 2, span: 20 },
 };
