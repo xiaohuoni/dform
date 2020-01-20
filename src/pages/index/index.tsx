@@ -1,29 +1,10 @@
 import React, { FC } from 'react';
-import { Button, List } from 'antd-mobile';
-import Form, { Field, useForm } from 'rc-field-form';
-import { Store } from 'rc-field-form/es/interface';
-import PositionIcon from './assets/position_ico.png';
-import PhotoIcon from './assets/photo.png';
+import { Button } from 'antd-mobile';
+import { Field, useForm } from 'rc-field-form';
+import { Store, ValidateErrorEntity } from 'rc-field-form/es/interface';
 
-import {
-  NomarInput,
-  NomarPicker,
-  NomarSwitch,
-  NomarTextArea,
-  NomarDatePicker,
-  NomarRadio,
-  RangeDatePicker,
-  ExtraInput,
-} from './components';
+import DynamicForm, { IFormItemProps } from './DynamicForm';
 
-interface DynamicFormProps {}
-
-const PikerData = ['text', 'bankCard', 'phone', 'password', 'number', 'digit', 'money'].map(
-  (item: string) => ({
-    value: item,
-    label: item,
-  }),
-) as any
 const tailLayout = {
   wrapperCol: { offset: 2, span: 20 },
 };
@@ -51,170 +32,81 @@ const seasons = [
   ],
 ];
 
-const radioList = [
-  {
-    label: '是',
-    value: 'yes',
-  },
-  {
-    label: '否',
-    value: 'no',
-  },
-];
-
-const DynamicForm: FC<DynamicFormProps> = props => {
+const Page: FC = props => {
   const [form] = useForm();
   const onFinish = (values: Store) => {
     console.log('Success:', values);
   };
 
-  const onFinishFailed = (errorInfo: Store) => {
+  const onFinishFailed = (errorInfo: ValidateErrorEntity) => {
     console.log('Failed:', errorInfo);
   };
 
-  const extraImg = () => {
-    return <img src={PositionIcon} onClick={e => console.log(e)} />;
+  const formsData = [
+    {
+      type: 'input',
+      fieldProps: 'username',
+      required: true,
+      placeholder: '请输入',
+      title: '用户名',
+      inputType: 'text',
+    },
+    {
+      type: 'select',
+      fieldProps: 'userdata',
+      required: true,
+      placeholder: '请选择',
+      title: '用户数据',
+      data: seasons,
+    },
+    {
+      type: 'switch',
+      fieldProps: 'userswitch',
+      required: true,
+      placeholder: '请选择',
+      title: '用户选择',
+    },
+    {
+      type: 'text',
+      fieldProps: 'useronlyread',
+      placeholder: '请选择',
+      title: '只读信息',
+    },
+    {
+      type: 'area',
+      fieldProps: 'usertextarea',
+      required: true,
+      placeholder: '多行输入',
+    },
+    {
+      type: 'date',
+      fieldProps: 'userDataPicker',
+      required: true,
+      placeholder: '请选择',
+      title: '用户时间选择',
+      modeType: 'datetime',
+    },
+  ] as IFormItemProps[];
+  const formsValues = {
+    username: 0,
   };
-
-  const photoImg = () => {
-    return <img src={PhotoIcon} style={{ width: '0.8rem', height: '0.6rem' }} />
-  }
-
+  const formProps = {
+    onFinish,
+    data: formsData,
+    // formsValues,
+    form,
+    isDev: true,
+    // allDisabled: true,
+  };
   return (
-    <Form
-      form={form}
-      name="basic"
-      initialValues={{
-        username: '123',
-        userRadio2: 'no',
-        userRadio1: 'yes',
-        userClick: '文字点击事件',
-        userImgClick: 'extra展示',
-        datePicker1: new Date(),
-        userEditable: '用户不可编辑',
-        usertextarea1: '多行文本编辑框，此处可编辑...',
-      }}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-    >
-      <List>
-        <NomarInput
-          fieldProps="username"
-          required
-          placeholder="请输入"
-          title="用户名"
-          inputType="text"
-        />
-        <NomarInput
-          editable={false}
-          fieldProps="userEditable"
-          required
-          placeholder="请选择"
-          title="用户选择"
-        />
-        <NomarInput
-          fieldProps="userClick"
-          required
-          placeholder="点击事件"
-          title="点击文字"
-          editable={false}
-          onClick={e => console.log(e)}
-          extra="¥"
-        />
-        <NomarInput
-          fieldProps="userImgClick"
-          required
-          placeholder="点击事件"
-          title="图片div"
-          editable={false}
-          extra={extraImg()}
-        />
-        <NomarInput
-          fieldProps="userPhoto"
-          placeholder=''
-          title={'身份展示'}
-          editable={false}
-          extra={photoImg()}
-        />
-        <ExtraInput
-          fieldProps="extraInput1"
-          fieldProps2="extraInput2"
-          placeholder="请输入1"
-          placeholder2="请输入"
-          title="文字区间1"
-          required
-        />
-        <ExtraInput
-          fieldProps="extraInput3"
-          fieldProps2="extraInput4"
-          placeholder="请输入1"
-          placeholder2="请输入2"
-          title="文字区间2"
-          required
-          extra={extraImg()}
-          extraType="input"
-        />
-        <ExtraInput
-          fieldProps="extraInput5"
-          fieldProps2="extraInput6"
-          placeholder="请输入"
-          placeholder2="请选择"
-          title="单位选择"
-          required
-          data={seasons}
-          // extra={extraImg()}
-          extraType="select"
-        />
-        <NomarPicker
-          fieldProps="userdata"
-          required
-          placeholder="请选择"
-          title="用户数据"
-          data={seasons}
-        />
-        <NomarDatePicker
-          fieldProps="userDataPicker"
-          required
-          placeholder="请选择"
-          title="用户时间选择"
-          modeType="month"
-        />
-        <NomarSwitch fieldProps="userswitch" required placeholder="请选择" title="用户选择" />
-        <RangeDatePicker
-          fieldProps="datePicker1"
-          fieldProps2="datePicker2"
-          required
-          title="时间(datetime)"
-          modeType="datetime"
-          minDate={new Date()}
-          maxDate={new Date()}
-        />
-        <RangeDatePicker
-          fieldProps="datePicker3"
-          fieldProps2="datePicker4"
-          required
-          title="时间(month)"
-          modeType="month"
-        />
-        <NomarRadio fieldProps="userRadio1" required title="用户选择1" data={radioList} />
-        <NomarRadio
-          fieldProps="userRadio2"
-          required
-          title="用户选择2"
-          data={radioList}
-          radioType="vertical"
-        />
-        <NomarTextArea fieldProps="usertextarea2" required placeholder="请输入..." />
-        <NomarTextArea fieldProps="usertextarea1" required placeholder="请选择" title="文本输入" />
-        <NomarTextArea fieldProps="usertextarea3" placeholder="请选择" />
-      </List>
+    <DynamicForm {...formProps}>
       <Field {...tailLayout}>
         <Button type="primary" onClick={() => form.submit()}>
           Submit
         </Button>
       </Field>
-    </Form>
+    </DynamicForm>
   );
 };
 
-export default DynamicForm;
+export default Page;

@@ -17,7 +17,7 @@ import {
   ExtraInput,
   RangeDatePicker,
   NomarRadio,
-} from '../index/components';
+} from './components';
 
 const FormItemType = {
   input: NomarInput,
@@ -128,10 +128,6 @@ const getShowDeitItem = (editData?: IFormItemProps) => {
     extraType = extraType[0] as DatePickerPropsType['mode'];
     otherProps.extraType = extraType;
   }
-  console.log(editData);
-  console.log(type);
-  console.log(FormItemType[type]);
-
   const ShowItemComponent = FormItemType[type];
   return <ShowItemComponent {...otherProps} />;
 };
@@ -156,12 +152,17 @@ export const defaultFailed = (
 const EditForm: FC<IEditFormProps> = ({ data = [] as any, onChange }) => {
   const [form] = useForm();
   // 选择类型的初始值要手动转化一下 1/3
-  console.log(data);
   if (data.fieldProps) {
-    const randomStr = Math.random()
+    // 加了随机数
+    data.fieldProps = `${Math.random()
       .toString(36)
-      .slice(2, 10);
-    data.fieldProps = `${randomStr}${data.fieldProps}`;
+      .slice(2, 6)}${data.fieldProps}`;
+  }
+  if (data.fieldProps2) {
+    // 加了随机数
+    data.fieldProps2 = `${Math.random()
+      .toString(36)
+      .slice(2, 6)}${data.fieldProps2}`;
   }
   if (data.inputType) {
     data.inputType = [data.inputType];
@@ -187,7 +188,6 @@ const EditForm: FC<IEditFormProps> = ({ data = [] as any, onChange }) => {
     if (extraType && typeof extraType !== 'string') {
       newFormItem.extraType = extraType[0] as 'input' | 'select';
     }
-    console.log(newFormItem);
     onChange && onChange(newFormItem);
   };
 

@@ -15,7 +15,7 @@ import {
   ExtraInput,
   RangeDatePicker,
   NomarRadio,
-} from '../index/components';
+} from './components';
 
 import NewFieldPicker from './NewFieldPicker';
 
