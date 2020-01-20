@@ -70,7 +70,7 @@ const NomarRadio: FC<INomarRadioProps> = props => {
         {
           <Field name={fieldProps} rules={rules || [{ required, message: `请选择${title}` }]}>
             <Radio.Group className={styles.fixRadioStyle} style={coverStyle} {...otherProps}>
-              {data.map(item => (
+              {data.map((item: radioItem) => (
                 <Radio key={item.label} value={item.value}>
                   {item.label}
                 </Radio>

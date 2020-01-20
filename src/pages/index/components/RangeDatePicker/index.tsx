@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { DatePicker, List } from 'antd-mobile';
 import { Field } from 'rc-field-form';
 import { INomarDatePickerProps } from '../NomarDatePicker';
