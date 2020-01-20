@@ -22,6 +22,7 @@
   "dependencies": {
     "@umijs/hooks": "^1.5.3",
     "alita": "*",
+    "copy-to-clipboard": "^3.2.0",
     "rc-field-form": "^0.0.0-alpha.30"
   },
   "devDependencies": {

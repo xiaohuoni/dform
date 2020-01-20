@@ -1,9 +1,10 @@
-import React, { FC, useEffect, useState } from 'react';
-import { List, Button, WhiteSpace, Modal } from 'antd-mobile';
+import React, { FC, useEffect } from 'react';
+import { List } from 'antd-mobile';
 import { InputItemPropsType } from 'antd-mobile/es/input-item/PropsType';
 import { DatePickerPropsType } from 'antd-mobile/es/date-picker/PropsType';
 import Form, { Field } from 'rc-field-form';
 import { Store, FormInstance, ValidateErrorEntity } from 'rc-field-form/es/interface';
+
 import {
   NomarInput,
   NomarPicker,
@@ -11,7 +12,12 @@ import {
   OnlyReadInput,
   NomarTextArea,
   NomarDatePicker,
+  ExtraInput,
+  RangeDatePicker,
+  NomarRadio,
 } from '../index/components';
+
+import NewFieldPicker from './NewFieldPicker';
 
 const FormItemType = {
   input: NomarInput,
@@ -20,18 +26,32 @@ const FormItemType = {
   area: NomarTextArea,
   date: NomarDatePicker,
   switch: NomarSwitch,
+  radio: NomarRadio,
+  extraInput: ExtraInput,
+  rangeDatePicker: RangeDatePicker,
 };
 
 export interface IFormItemProps {
-  type: 'input' | 'text' | 'select' | 'area' | 'date';
+  type:
+    | 'input'
+    | 'text'
+    | 'select'
+    | 'area'
+    | 'date'
+    | 'switch'
+    | 'extraInput'
+    | 'radio'
+    | 'rangeDatePicker';
   title: string;
   fieldProps: string;
   required?: boolean;
   placeholder?: string;
   disabled?: boolean;
-  data?: [];
+  data?: any[];
   inputType?: InputItemPropsType['type'];
   modeType?: DatePickerPropsType['mode'];
+  fieldProps2?: string;
+  placeholder2?: string;
 }
 
 export interface IDynamicFormProps {
@@ -43,70 +63,31 @@ export interface IDynamicFormProps {
   onFinishFailed?: (errorInfo: ValidateErrorEntity) => void;
   isDev?: boolean; // 手动声明是开发模式
 }
+
 const nodeEnvIsDev = process.env.NODE_ENV === 'development';
 
-interface NewFieldPickerProps {
-  onChange?: (t: any) => void;
-  value?: IFormItemProps[];
-}
-
-const InitFormData = [
-  {
-    type: 'input',
-    fieldProps: 'username',
-    required: true,
-    placeholder: '请输入',
-    title: '用户名',
-    inputType: 'text',
-  },
-] as IFormItemProps[];
-
-const InitFormValue = {
-  username: '张三',
-};
-const getFormItem = (
-  formItem: IFormItemProps,
-  allDisabled: boolean,
-  onClick?: (formItem: IFormItemProps) => void,
-) => {
+export const getFormItem = (formItem: IFormItemProps, allDisabled: boolean) => {
   const { type, disabled = allDisabled, ...otherProps } = formItem;
   const FormItemComponent = FormItemType[formItem.type];
-  return (
-    <FormItemComponent
-      {...otherProps}
-      key={formItem.fieldProps}
-      disabled={disabled}
-      onClick={() => onClick && onClick(formItem)}
-    />
-  );
+  return <FormItemComponent {...otherProps} key={formItem.fieldProps} disabled={disabled} />;
 };
 
-const NewFieldPicker: FC<NewFieldPickerProps> = ({ onChange, value }) => {
-  const [modal, setModal] = useState(false);
-  const [alitaDformExtraField, setAlitaDformExtraField] = useState<IFormItemProps[]>(value || []);
-  const onSelectFieldItem = (formItem: IFormItemProps) => {
-    console.log('use select', formItem);
-    alitaDformExtraField.push(formItem);
-    setAlitaDformExtraField(alitaDformExtraField);
-    onChange && onChange(alitaDformExtraField);
+export const defaultFailed = (
+  errorInfo: ValidateErrorEntity,
+  onFinishFailed?: (errorInfo: ValidateErrorEntity) => void,
+) => {
+  if (!errorInfo || !errorInfo.errorFields || errorInfo.errorFields.length === 0) {
+    onFinishFailed && onFinishFailed(errorInfo);
+    return;
+  }
+  const scrollToField = (fieldKey: any) => {
+    const labelNode = document.getElementById(`aliat-dform-${fieldKey}`);
+    if (labelNode) {
+      labelNode.scrollIntoView(true);
+    }
   };
-
-  return (
-    <>
-      <Button type="primary" onClick={() => setModal(true)}>
-        新增表单
-      </Button>
-      <WhiteSpace />
-      <Modal popup visible={modal} onClose={() => setModal(false)} animationType="slide-up">
-        <List renderHeader={() => <div>选择表单类型</div>}>
-          {InitFormData.map(item => getFormItem(item, false, onSelectFieldItem))}
-          <Button type="primary" onClick={() => setModal(false)}>
-            完成
-          </Button>
-        </List>
-      </Modal>
-    </>
-  );
+  scrollToField(errorInfo.errorFields[0].name[0]);
+  onFinishFailed && onFinishFailed(errorInfo);
 };
 
 const DynamicForm: FC<IDynamicFormProps> = ({
@@ -117,48 +98,26 @@ const DynamicForm: FC<IDynamicFormProps> = ({
   formsValues,
   onFinish,
   onFinishFailed,
-  isDev = nodeEnvIsDev,
+  isDev,
 }) => {
   useEffect(() => {
     form.setFieldsValue(formsValues as Store);
   }, [formsValues]);
 
-  const defaultFailed = (errorInfo: ValidateErrorEntity) => {
-    if (!errorInfo || !errorInfo.errorFields || errorInfo.errorFields.length === 0) {
-      onFinishFailed && onFinishFailed(errorInfo);
-      return;
-    }
-    const scrollToField = (fieldKey: any) => {
-      const labelNode = document.getElementById(`aliat-dform-${fieldKey}`);
-      if (labelNode) {
-        labelNode.scrollIntoView(true);
-      }
-    };
-    scrollToField(errorInfo.errorFields[0].name[0]);
-    onFinishFailed && onFinishFailed(errorInfo);
-  };
-  const tureFormsValues = data.length === 0 ? InitFormValue : formsValues;
-  console.log(tureFormsValues);
+  const showAddItem = isDev || (nodeEnvIsDev && data.length === 0);
 
   return (
     <Form
       form={form}
-      initialValues={tureFormsValues}
+      initialValues={formsValues}
       onFinish={onFinish}
-      onFinishFailed={defaultFailed}
+      onFinishFailed={(errorInfo: ValidateErrorEntity) => defaultFailed(errorInfo, onFinishFailed)}
       onValuesChange={changFeil => {
         console.log(changFeil);
       }}
     >
-      <List>
-        {data.map(item => getFormItem(item, allDisabled))}
-
-        {isDev && data.length === 0 && (
-          <Field name="alitaDformExtraField">
-            <NewFieldPicker />
-          </Field>
-        )}
-      </List>
+      <List>{data.map(item => getFormItem(item, allDisabled))}</List>
+      {showAddItem && <NewFieldPicker />}
       {children}
     </Form>
   );

@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { InputItem, Picker, List } from 'antd-mobile';
 import { InputItemPropsType } from 'antd-mobile/es/input-item/PropsType';
+
 import { Field } from 'rc-field-form';
 import { NomarInput } from '../';
 
@@ -9,7 +10,7 @@ import styles from '../../styles/index.less';
 export interface IExtraInputProps extends InputItemPropsType {
   inputType?: InputItemPropsType['type'];
   fieldProps: string;
-  fieldProps2: string;
+  fieldProps2?: string;
   placeholder2?: string;
   required?: boolean;
   rules?: [];

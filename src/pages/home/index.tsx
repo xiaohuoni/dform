@@ -178,9 +178,41 @@ const Page: FC = props => {
   };
   const formProps = {
     onFinish,
-    data: [],
+    data: [
+      {
+        type: 'select',
+        fieldProps: 'userdata',
+        required: true,
+        placeholder: '请选择',
+        title: '用户数据',
+        data: [
+          [
+            {
+              label: '2013',
+              value: '2013',
+            },
+            {
+              label: '2014',
+              value: '2014',
+            },
+          ],
+          [
+            {
+              label: '春',
+              value: '春',
+            },
+            {
+              label: '夏',
+              value: '夏',
+            },
+          ],
+        ],
+      },
+    ] as IFormItemProps[],
     // formsValues,
+
     form,
+    isDev: true,
     // allDisabled: true,
   };
   return (

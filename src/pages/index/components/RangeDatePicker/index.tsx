@@ -7,7 +7,7 @@ import { changeDateFormat } from '../../utils';
 import styles from '../../styles/index.less';
 
 export interface IRangeDatePickerProps extends INomarDatePickerProps {
-  fieldProps2: string;
+  fieldProps2?: string;
   minDate?: Date;
   maxDate?: Date;
 }
@@ -29,7 +29,13 @@ const RangeDatePicker: FC<IRangeDatePickerProps> = props => {
     <div className={styles.rangeDatePickerStyle}>
       <div className={styles.beginDatePickerStyle}>
         <Field name={fieldProps} rules={rules || [{ required, message: `请选择${title}` }]}>
-          <DatePicker {...otherProps} mode={modeType} minDate={minDate} maxDate={maxDate}>
+          <DatePicker
+            {...otherProps}
+            mode={modeType}
+            minDate={minDate}
+            maxDate={maxDate}
+            format={value => changeDateFormat(value, modeType)}
+          >
             <List.Item arrow="horizontal">
               {required && <span className={styles.redStar}>*</span>}
               <span id={fieldProps}>{title}</span>
