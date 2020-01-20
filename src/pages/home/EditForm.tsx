@@ -47,6 +47,7 @@ const EditFormItemLabel = {
   modeType: '选择器类型',
   fieldProps2: '副绑定关键字',
   placeholder2: '副输入提示',
+  extraType: '扩展类型',
 };
 // inputType:'text' | 'bankCard' | 'phone' | 'password' | 'number' | 'digit' | 'money';
 // modeType:mode?: 'datetime' | 'date' | 'year' | 'month' | 'time';
@@ -85,7 +86,20 @@ const EditFormItemType = {
   ),
   fieldProps2: NomarInput,
   placeholder2: NomarInput,
+  extraType: (props: any) => (
+    <NomarPicker
+      data={[
+        ['input', 'select'].map((item: string) => ({
+          value: item,
+          label: item,
+        })),
+      ]}
+      cols={1}
+      {...props}
+    />
+  ),
 };
+
 const getFormItem = (fieldItemKey: string) => {
   const EditFormItemComponent = EditFormItemType[fieldItemKey];
   const title = EditFormItemLabel[fieldItemKey];
@@ -100,7 +114,7 @@ const getFormItem = (fieldItemKey: string) => {
 
 const getShowDeitItem = (editData?: IFormItemProps) => {
   if (!editData) return;
-  let { type, inputType, modeType, ...otherProps } = editData as any;
+  let { type, inputType, modeType, extraType, ...otherProps } = editData as any;
   // 选择类型的初始值要手动转化一下 2/3
   if (inputType) {
     inputType = inputType[0] as InputItemPropsType['type'];
@@ -110,6 +124,14 @@ const getShowDeitItem = (editData?: IFormItemProps) => {
     modeType = modeType[0] as DatePickerPropsType['mode'];
     otherProps.modeType = modeType;
   }
+  if (extraType) {
+    extraType = extraType[0] as DatePickerPropsType['mode'];
+    otherProps.extraType = extraType;
+  }
+  console.log(editData);
+  console.log(type);
+  console.log(FormItemType[type]);
+
   const ShowItemComponent = FormItemType[type];
   return <ShowItemComponent {...otherProps} />;
 };
@@ -134,23 +156,36 @@ export const defaultFailed = (
 const EditForm: FC<IEditFormProps> = ({ data = [] as any, onChange }) => {
   const [form] = useForm();
   // 选择类型的初始值要手动转化一下 1/3
+  console.log(data);
+  if (data.fieldProps) {
+    const randomStr = Math.random()
+      .toString(36)
+      .slice(2, 10);
+    data.fieldProps = `${randomStr}${data.fieldProps}`;
+  }
   if (data.inputType) {
     data.inputType = [data.inputType];
   }
   if (data.modeType) {
     data.modeType = [data.modeType];
   }
+  if (data.extraType) {
+    data.extraType = [data.extraType];
+  }
   const [editData, setEditData] = useState(data);
   const onFinish = (values: Store) => {
     console.log('Success:', values);
     // 选择类型的初始值要手动转化一下 3/3
     const newFormItem = { ...values };
-    const { inputType, modeType } = newFormItem;
+    const { inputType, modeType, extraType } = newFormItem;
     if (inputType && typeof inputType !== 'string') {
       newFormItem.inputType = inputType[0] as InputItemPropsType['type'];
     }
     if (modeType && typeof modeType !== 'string') {
       newFormItem.modeType = modeType[0] as DatePickerPropsType['mode'];
+    }
+    if (extraType && typeof extraType !== 'string') {
+      newFormItem.extraType = extraType[0] as 'input' | 'select';
     }
     console.log(newFormItem);
     onChange && onChange(newFormItem);

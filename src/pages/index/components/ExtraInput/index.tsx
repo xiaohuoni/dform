@@ -21,6 +21,7 @@ export interface IExtraInputProps extends InputItemPropsType {
 const ExtraInput: FC<IExtraInputProps> = props => {
   const {
     inputType = 'text',
+    fieldProps,
     fieldProps2,
     title,
     required,
@@ -45,12 +46,7 @@ const ExtraInput: FC<IExtraInputProps> = props => {
 
     return (
       <Field name={fieldProps2} rules={rules || [{ required, message: `请输入${title}` }]}>
-        <InputItem
-          {...otherProps}
-          type={inputType}
-          style={{ textAlign: 'right', ...coverStyle }}
-          placeholder={placeholder2}
-        />
+        <InputItem {...otherProps} type={inputType} style={{ textAlign: 'right', ...coverStyle }} />
       </Field>
     );
   };
@@ -67,6 +63,7 @@ const ExtraInput: FC<IExtraInputProps> = props => {
           required={required}
           rules={rules}
           coverStyle={coverStyle}
+          fieldProps={fieldProps}
           extra=""
         />
       </div>

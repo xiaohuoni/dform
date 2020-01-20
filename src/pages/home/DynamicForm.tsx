@@ -52,6 +52,7 @@ export interface IFormItemProps {
   modeType?: DatePickerPropsType['mode'];
   fieldProps2?: string;
   placeholder2?: string;
+  extraType?: 'input' | 'select';
 }
 
 export interface IDynamicFormProps {

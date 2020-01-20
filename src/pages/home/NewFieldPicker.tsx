@@ -44,6 +44,18 @@ const seasons = [
     },
   ],
 ];
+const seasonsUti = [
+  [
+    {
+      label: '元',
+      value: '元',
+    },
+    {
+      label: '亿元',
+      value: '亿元',
+    },
+  ],
+];
 
 const InitFormData = [
   {
@@ -158,7 +170,7 @@ const InitFormData = [
     placeholder: '请输入',
     placeholder2: '请选择',
     title: '单位选择',
-    data: seasons,
+    data: seasonsUti,
     extraType: 'select',
   },
   {
@@ -183,7 +195,7 @@ const NewFieldPicker: FC<NewFieldPickerProps> = ({ onChange, value }) => {
   const [selectFieldItem, setSelectFieldItem] = useState<IFormItemProps>();
   const [alitaDformExtraField, setAlitaDformExtraField] = useState<IFormItemProps[]>(value || []);
   const onSelectFieldItem = (formItem: IFormItemProps) => {
-    alitaDformExtraField.push(formItem);
+    alitaDformExtraField.push({ ...formItem });
     setAlitaDformExtraField(alitaDformExtraField);
     // onChange && onChange(alitaDformExtraField);
     setModal2(false);
@@ -296,7 +308,7 @@ const NewFieldPicker: FC<NewFieldPickerProps> = ({ onChange, value }) => {
                   onClick={e => {
                     console.log('Modal Click');
                     e.stopPropagation();
-                    setSelectFieldItem(item);
+                    setSelectFieldItem({ ...item });
                     setModal(false);
                     setModal2(true);
                   }}
